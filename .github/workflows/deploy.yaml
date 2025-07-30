@@ -51,7 +51,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Configure Docker for GCR
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker gcr.io --quiet
 
       - name: Build and Push Docker image
         run: |
@@ -76,3 +76,4 @@ jobs:
         run: |
           SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --platform managed --region $REGION --format 'value(status.url)')
           echo "🚀 Deployed to: $SERVICE_URL"
+          echo "📚 API Docs: $SERVICE_URL/docs"
