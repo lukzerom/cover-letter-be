@@ -25,8 +25,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Test application
+      - name: Test application with dummy API key
         run: |
+          export OPENAI_API_KEY="sk-dummy-key-for-testing"
           python -c "import main; print('✅ App imports successfully')"
 
   deploy:
