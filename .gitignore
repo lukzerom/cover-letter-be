@@ -49,3 +49,7 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db 
+
+# Google Cloud service account keys
+github-actions-key.json
+*.json
