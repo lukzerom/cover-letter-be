@@ -160,7 +160,7 @@ def generate_cover_letter_with_openai(
         
         **Applicant Information:**
         Name: {cv_data.personalInfo.name}
-        Summary: {cv_data.summary}
+        Profile Summary (FOR CONTEXT ONLY - DO NOT copy or paraphrase directly): {cv_data.summary}
         
         **Key Experience:**
         {chr(10).join([f"- {exp.title} at {exp.company}: {exp.description}" for exp in cv_data.experience[:3]])}
@@ -185,9 +185,14 @@ def generate_cover_letter_with_openai(
         - Role level: {settings["roleLevel"]}
         {career_change_note}
         
+        **CRITICAL INSTRUCTIONS:**
+        - NEVER translate technical terms, programming languages, frameworks, tools, or job titles (e.g., keep "React", "Frontend Developer", "Python", "DevOps", "UI/UX", etc. in English)
+        - Use the profile summary ONLY for understanding the candidate's background - generate fresh, original content for the cover letter
+        - Do NOT copy or paraphrase the profile summary directly into the cover letter
+        
         Create a compelling cover letter that:
         1. Opens with a strong hook related to the specific role
-        2. Highlights relevant experience and skills from the CV
+        2. Highlights relevant experience and skills from the CV (using original language, not copying the summary)
         3. Incorporates the personalization elements naturally
         4. Shows genuine interest in the company/role
         5. Ends with a confident call to action
@@ -198,10 +203,10 @@ def generate_cover_letter_with_openai(
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": f"You are an expert cover letter writer who can write in multiple languages. Write compelling, personalized cover letters that help candidates get interviews. Always write in the language specified in the user's requirements. Current language: {settings.get('language', 'english')}"},
+                {"role": "system", "content": f"You are an expert cover letter writer who can write in multiple languages. Write compelling, personalized cover letters that help candidates get interviews. Always write in the language specified in the user's requirements, but NEVER translate technical terms, programming languages, frameworks, tools, or job titles - keep them in English (e.g., React, Python, Frontend Developer, DevOps). Generate original content and do not copy or paraphrase profile summaries directly. Current language: {settings.get('language', 'english')}"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=settings.get("temperature", 0.7)
         )
         
         return response.choices[0].message.content.strip()

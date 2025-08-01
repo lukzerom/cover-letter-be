@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Literal
 
 
@@ -49,6 +49,7 @@ class GenerationSettings(BaseModel):
     language: Literal["english", "polish", "german", "french", "spanish", "italian", "dutch", "portuguese"]
     careerChange: bool
     roleLevel: Literal["entry-level", "mid-level", "senior", "executive"]
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0, description="OpenAI temperature parameter (0.0-2.0). Higher values = more creative, lower values = more focused")
 
 
 class CoverLetterRequest(BaseModel):
