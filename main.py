@@ -167,12 +167,12 @@ def generate_cover_letter_with_openai(
         Profile Summary (FOR CONTEXT ONLY - DO NOT copy or paraphrase directly): {cv_data.summary}
         
         **Key Experience:**
-        {chr(10).join([f"- {exp.title} at {exp.company}: {exp.description}" for exp in cv_data.experience[:3]])}
+        {chr(10).join([f"- {exp.title} at {exp.company}: {exp.description}" for exp in cv_data.experience[:10]])}
         
         **Education:**
         {chr(10).join([f"- {edu.degree} from {edu.institution}" for edu in cv_data.education])}
         
-        **Skills:** {', '.join(cv_data.skills[:10])}
+        **Skills:** {', '.join(cv_data.skills[:50])}
         
         **Job Description:**
         {job_description}
