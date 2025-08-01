@@ -19,9 +19,13 @@ app = FastAPI(title="Cover Letter Generator API", version="1.0.0")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure this properly for production
+    allow_origins=[
+        "https://cover-letter-generator.zeromski.dev",
+        "http://localhost:3000",  # For local development
+        "http://localhost:5173",  # For Vite dev server
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
